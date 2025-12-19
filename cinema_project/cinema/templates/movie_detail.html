@@ -1,0 +1,31 @@
+{% extends 'cinema/base.html' %}
+{% block title %}{{ movie.title }}{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-4">
+        {% if movie.poster %}
+            <img src="{{ movie.poster.url }}" class="img-fluid rounded shadow">
+        {% endif %}
+    </div>
+
+    <div class="col-md-8">
+        <h1>{{ movie.title }}</h1>
+        <p>{{ movie.description }}</p>
+
+        <h4 class="mt-4">Сеансы</h4>
+        <ul class="list-group">
+            {% for s in seanses %}
+                <li class="list-group-item d-flex justify-content-between">
+                    {{ s.start_time|date:"d.m.Y H:i" }} — Зал №{{ s.hall.number }}
+                    <a href="{% url 'seans_detail' s.id %}" class="btn btn-sm btn-success">
+                        Места
+                    </a>
+                </li>
+            {% empty %}
+                <li class="list-group-item">Сеансов пока нет</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}

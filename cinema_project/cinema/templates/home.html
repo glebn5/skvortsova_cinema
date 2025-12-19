@@ -1,0 +1,34 @@
+{% extends 'cinema/base.html' %}
+{% block title %}Афиша{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">🎥 Ближайшие сеансы</h1>
+
+<div class="row">
+    {% for s in seanses %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm">
+                {% if s.movie.poster %}
+                    <img src="{{ s.movie.poster.url }}" class="card-img-top">
+                {% endif %}
+
+                <div class="card-body">
+                    <h5 class="card-title">{{ s.movie.title }}</h5>
+                    <p class="card-text">
+                        Зал №{{ s.hall.number }}<br>
+                        {{ s.start_time|date:"d.m.Y H:i" }}
+                    </p>
+                </div>
+
+                <div class="card-footer bg-white">
+                    <a href="{% url 'seans_detail' s.id %}" class="btn btn-primary w-100">
+                        Выбрать места
+                    </a>
+                </div>
+            </div>
+        </div>
+    {% empty %}
+        <p>Нет доступных сеансов</p>
+    {% endfor %}
+</div>
+{% endblock %}
